@@ -1,7 +1,10 @@
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
-  /* config options here */
+  images: {
+    // Logo files are served from /public — no remote domains needed
+    remotePatterns: [],
+  },
 };
 
 export default nextConfig;
