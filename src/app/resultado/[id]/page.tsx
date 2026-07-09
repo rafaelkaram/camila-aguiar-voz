@@ -13,7 +13,7 @@ interface PageProps {
 
 export default async function ResultadoPage({ params }: PageProps) {
   const { id } = await params;
-  const supabase = await createServiceClient();
+  const supabase = createServiceClient();
 
   const { data: session } = await supabase
     .from("sessions")

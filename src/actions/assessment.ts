@@ -17,7 +17,7 @@ export interface SaveAssessmentResult {
 export async function saveAssessment(
   input: SaveAssessmentInput
 ): Promise<SaveAssessmentResult> {
-  const supabase = await createServiceClient();
+  const supabase = createServiceClient();
   const { participant, fadiga } = input;
 
   // 1. Insert session
