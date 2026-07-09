@@ -29,8 +29,17 @@ export async function proxy(request: NextRequest) {
     data: { user },
   } = await supabase.auth.getUser();
 
-  const isAdminRoute = request.nextUrl.pathname.startsWith("/admin");
-  const isLoginPage = request.nextUrl.pathname === "/admin/login";
+  const pathname = request.nextUrl.pathname;
+  const isAdminRoot = pathname === "/admin";
+  const isLoginPage = pathname === "/admin/login";
+  const isAdminRoute = pathname.startsWith("/admin");
+
+  // /admin → redireciona para dashboard ou login
+  if (isAdminRoot) {
+    const url = request.nextUrl.clone();
+    url.pathname = user ? "/admin/dashboard" : "/admin/login";
+    return NextResponse.redirect(url);
+  }
 
   if (isAdminRoute && !isLoginPage && !user) {
     const url = request.nextUrl.clone();
@@ -48,5 +57,5 @@ export async function proxy(request: NextRequest) {
 }
 
 export const config = {
-  matcher: ["/admin/:path*"],
+  matcher: ["/admin", "/admin/:path*"],
 };
